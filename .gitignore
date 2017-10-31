@@ -16,9 +16,6 @@
 *.dylib
 *.dll
 
-# Fortran module files
-*.mod
-*.smod
 
 # Compiled Static libraries
 *.lai
@@ -27,6 +24,7 @@
 *.lib
 
 # Executables
-*.exe
 *.out
-*.app
+
+# IDE config files
+*.json
