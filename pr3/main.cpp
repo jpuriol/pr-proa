@@ -14,6 +14,46 @@ struct elem
     int num;
 };
 
+list<elem> OrdenarInsercionLimitado(const map<wstring, int> &, const int &);
+list<elem> OrdenarInsercionLimitado(const unordered_map<wstring, int> &, const int &);
+vector<wstring> leer(string);
+map<wstring, int> crearMapa(vector<wstring>);
+unordered_map<wstring, int> crearMapaDesordenado(vector<wstring>);
+unordered_map<wstring, int> crearMapaDesordenado(vector<wstring>);
+
+int main()
+{
+    locale::global(locale("es_ES.utf8"));
+    vector<wstring> salida = leer("texto.txt");
+    struct timespec ini_time, fin_time;
+
+    clock_gettime(CLOCK_REALTIME, &ini_time);
+    map<wstring, int> mapa = crearMapa(salida);
+    list<elem> salida2 = OrdenarInsercionLimitado(mapa, 30);
+    clock_gettime(CLOCK_REALTIME, &fin_time);
+
+    wcout << "------" << endl;
+    wcout << "Ordenar inserción con mapa" << endl;
+    wcout << "Tiempo: " << (double)fin_time.tv_sec - (double) ini_time.tv_sec + fin_time.tv_nsec * 1e-9 - ini_time.tv_nsec * 1e-9 << endl;
+    wcout << "------" << endl; 
+    for (auto iter : salida2)
+        wcout << iter.clave << "," << iter.num << endl;
+
+    clock_gettime(CLOCK_REALTIME, &ini_time);
+    unordered_map<wstring, int> mapa2 = crearMapaDesordenado(salida);
+    list<elem> salida3 = OrdenarInsercionLimitado(mapa2, 30);
+    clock_gettime(CLOCK_REALTIME, &fin_time);
+
+    wcout << endl << endl << "------" << endl;
+    wcout << "Ordenar inserción con mapa desordenado" << endl;
+    wcout << "Tiempo: " << (double)fin_time.tv_sec - (double) ini_time.tv_sec + fin_time.tv_nsec * 1e-9 - ini_time.tv_nsec * 1e-9 << endl;
+    wcout << "------" << endl;
+    for (auto iter : salida3)
+        wcout << iter.clave << "," << iter.num << endl;
+
+    return 0;
+}
+
 list<elem> OrdenarInsercionLimitado(const map<wstring, int> &mapa, const int &numeros)
 {
     bool fin;
@@ -146,27 +186,4 @@ unordered_map<wstring, int> crearMapaDesordenado(vector<wstring> salida)
             mapa[iter] = 1;
     }
     return mapa;
-}
-
-int main()
-{
-    locale::global(locale("es_ES.utf8"));
-    vector<wstring> salida = leer("texto.txt");
-
-    map<wstring, int> mapa = crearMapa(salida);
-
-    list<elem> salida2 = OrdenarInsercionLimitado(mapa, 30);
-
-    cout << "------" << endl;
-    for (auto iter : salida2)
-        wcout << iter.clave << "," << iter.num << endl;
-
-    unordered_map<wstring, int> mapa2 = crearMapaDesordenado(salida);
-    list<elem> salida3 = OrdenarInsercionLimitado(mapa2, 30);
-
-    cout << "------" << endl;
-    for (auto iter : salida3)
-        wcout << iter.clave << "," << iter.num << endl;
-
-    return 0;
 }

@@ -28,3 +28,7 @@
 
 # IDE config files
 *.json
+
+# Compressed files
+*.tar.gz
+*.zip
