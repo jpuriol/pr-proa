@@ -10,15 +10,26 @@ struct Prueba
 {
     float f1, f2;
     int i1, i2, i3;
+    static unsigned char pool[];
+    static bool alloc_map[];
     void* operator new(size_t tam)
     {
-        void* m = malloc(tam);
-        if(!m) throw bad_alloc();
-        return m;
+        for(int i = 0; i < p_size; i++)
+            if(!alloc_map[i]) 
+            {
+                alloc_map[i] = true; // Mark it used
+                return pool + (i * sizeof(Prueba));
+            }
+        throw bad_alloc();
     };
     void operator delete(void* m)
     {
-        free(m);
+        if(!m) return; // Check for null pointer
+        // Assume it was created in the pool
+        // Calculate which block number it is:
+        unsigned long block = (unsigned long)m - (unsigned long)pool;
+        block /= sizeof(Prueba);
+        alloc_map[block] = false;
     };
 };
 
