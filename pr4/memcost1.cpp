@@ -43,6 +43,14 @@ int main()
     tiempo3 = (double)fin_time.tv_sec - (double) ini_time.tv_sec + fin_time.tv_nsec * 1e-9 - ini_time.tv_nsec * 1e-9;
     cout << "Tiempo dinámico (unique_ptr): " << tiempo3 << endl;
     cout << "-Diferencia: " << tiempo3 - tiempo2 << endl;
+    
+    clock_gettime(CLOCK_REALTIME, &ini_time);
+    for(int i = 0; i < NUMERO_EJECUCIONES; i++)
+        costeMem4();
+    clock_gettime(CLOCK_REALTIME, &fin_time);
+    tiempo4 = (double)fin_time.tv_sec - (double) ini_time.tv_sec + fin_time.tv_nsec * 1e-9 - ini_time.tv_nsec * 1e-9;
+    cout << "Tiempo dinámico (shared_ptr): " << tiempo4 << endl;
+    cout << "-Diferencia: " << tiempo4 - tiempo2 << endl;
 
     return 0;
 }
@@ -86,3 +94,15 @@ void costeMem3()
         suma += v[i]->i1;
 }
     
+void costeMem4()
+{
+    shared_ptr<Prueba> v[N_ELEM];
+    volatile int suma = 0;
+    for (int i = 0; i < N_ELEM; i++)
+    {
+        v[i].reset(new Prueba); 
+        v[i]->i1 = i;
+    }
+    for (int i = 0; i < N_ELEM; i++)
+        suma += v[i]->i1;
+}
