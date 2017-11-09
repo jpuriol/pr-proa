@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <memory>
 using namespace std;
 
 const int NUMERO_EJECUCIONES = 10000;
@@ -13,6 +13,8 @@ struct Prueba
 
 void costeMem1();
 void costeMem2();
+void costeMem3();
+void costeMem4();
 
 int main()
 {
@@ -31,8 +33,16 @@ int main()
         costeMem2();
     clock_gettime(CLOCK_REALTIME, &fin_time);
     tiempo2 = (double)fin_time.tv_sec - (double) ini_time.tv_sec + fin_time.tv_nsec * 1e-9 - ini_time.tv_nsec * 1e-9;
-    cout << "Tiempo dinámico: " << tiempo2 << endl;
-    cout << "Diferencia: " << tiempo2 - tiempo1 << endl;
+    cout << "Tiempo dinámico (punteros básicos): " << tiempo2 << endl;
+    cout << "-Diferencia: " << tiempo2 - tiempo1 << endl;
+    
+    clock_gettime(CLOCK_REALTIME, &ini_time);
+    for(int i = 0; i < NUMERO_EJECUCIONES; i++)
+        costeMem3();
+    clock_gettime(CLOCK_REALTIME, &fin_time);
+    tiempo3 = (double)fin_time.tv_sec - (double) ini_time.tv_sec + fin_time.tv_nsec * 1e-9 - ini_time.tv_nsec * 1e-9;
+    cout << "Tiempo dinámico (unique_ptr): " << tiempo3 << endl;
+    cout << "-Diferencia: " << tiempo3 - tiempo2 << endl;
 
     return 0;
 }
@@ -61,5 +71,18 @@ void costeMem2()
         suma += v[i]->i1;
         delete v[i];
     }
+}
+
+void costeMem3()
+{
+    unique_ptr<Prueba> v[N_ELEM];
+    volatile int suma = 0;
+    for (int i = 0; i < N_ELEM; i++)
+    {
+        v[i].reset(new Prueba); 
+        v[i]->i1 = i;
+    }
+    for (int i = 0; i < N_ELEM; i++)
+        suma += v[i]->i1;
 }
     
