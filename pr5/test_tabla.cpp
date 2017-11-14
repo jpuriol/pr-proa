@@ -11,9 +11,14 @@
 */
 
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <time.h>
+#include <iostream>
 #include <stdlib.h>
 #include "alumno.h"
-#include "tabla.h"
+#include "tabla_t.h"
 using namespace std;
 
 int aleatorio1a4();
@@ -26,9 +31,9 @@ int aleatorio1a4();
 int main()
 {
     srand (time(NULL));
-    int curso;
-    String DNIdentro;
-    Tabla(400) tabla; 
+    int curso, CursoDentro;
+    string DNIdentro;
+    Tabla<string,Alumno> tabla =Tabla<string,Alumno>(400); 
     Alumno alumno,alumnoDentro;
     bool dentro,fuera;
     for(int i=0;i<200;i++)
@@ -36,7 +41,7 @@ int main()
         curso=aleatorio1a4();
         alumno=Alumno(curso);
         tabla.insertar(alumno.getDNI(),alumno);
-        if(i=100)
+        if(i==100)
         {
             DNIdentro=alumno.getDNI();
             alumnoDentro=alumno;
@@ -56,7 +61,35 @@ int main()
         cout<<"EXISTE";
     else
         cout<<"NO EXISTE";
+    cout<<"\n\n\n";
+    
+    Tabla<int,Alumno> tabla2 =Tabla<int,Alumno>(400); 
+    for(int i=0;i<200;i++)
+    {
+        curso=aleatorio1a4();
+        alumno=Alumno(curso);
+        tabla2.insertar((int)curso,alumno);
+        if(i==100)
+        {
+            CursoDentro=curso;
+            alumnoDentro=alumno;
+        }
+    }
+    dentro=tabla2.buscar((int)CursoDentro, alumnoDentro); 
+    fuera=tabla2.buscar(5, alumno); 
+    cout<<"Buscar existente: ";
+    if(dentro)
+        cout<<"EXISTE";
+    else
+        cout<<"NO EXISTE";
+    cout<<"\nBuscar no existente: ";
+    if(fuera)
+        cout<<"EXISTE";
+    else
+        cout<<"NO EXISTE";
     cout<<"\n";
+    
+    /*fin*/
     
     return 0;
 }
@@ -69,7 +102,7 @@ int main()
 */
 int aleatorio1a4()
 {
-    num=rand();
+    int num=rand();
     num=num&3;
     ++num;
     return num;
