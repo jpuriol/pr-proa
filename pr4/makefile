@@ -7,4 +7,4 @@ memcost2: memcost2.cpp
 	g++ -std=c++11 -Wall memcost2.cpp -o memcost2.out -O2
 	
 clean:
-	rm *.o *.out
+	rm  *.out
