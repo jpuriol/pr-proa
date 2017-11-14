@@ -4,9 +4,8 @@
 #include <cstdlib>
 using namespace std;
 
-const int NUMERO_EJECUCIONES = 100000;
+const int NUMERO_EJECUCIONES = 10000;
 const int N_ELEM = 1000;
-
 
 
 struct Prueba
