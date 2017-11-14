@@ -10,18 +10,20 @@ struct Prueba
 {
     float f1, f2;
     int i1, i2, i3;
-    static unsigned char pool[];
-    static bool alloc_map[];
-    void* operator new(size_t tam)
+    const static int psize = 1000;
+    static unsigned char pool[N_ELEM  * psize];
+    static bool alloc_map[N_ELEM]; 
+    void* operator new(size_t)
     {
-        for(int i = 0; i < p_size; i++)
-            if(!alloc_map[i]) 
+        for(int i = 0; i < N_ELEM; i++)
+            if(!alloc_map[i])
             {
-                alloc_map[i] = true; // Mark it used
+                alloc_map[i] = true; // Mark it's used
                 return pool + (i * sizeof(Prueba));
             }
         throw bad_alloc();
     };
+
     void operator delete(void* m)
     {
         if(!m) return; // Check for null pointer
