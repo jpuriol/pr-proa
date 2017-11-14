@@ -31,7 +31,7 @@ int aleatorio1a4();
 int main()
 {
     srand (time(NULL));
-    int curso;
+    int curso, CursoDentro;
     string DNIdentro;
     Tabla<string,Alumno> tabla =Tabla<string,Alumno>(400); 
     Alumno alumno,alumnoDentro;
@@ -61,7 +61,35 @@ int main()
         cout<<"EXISTE";
     else
         cout<<"NO EXISTE";
+    cout<<"\n\n\n";
+    
+    Tabla<int,Alumno> tabla2 =Tabla<int,Alumno>(400); 
+    for(int i=0;i<200;i++)
+    {
+        curso=aleatorio1a4();
+        alumno=Alumno(curso);
+        tabla2.insertar((int)curso,alumno);
+        if(i==100)
+        {
+            CursoDentro=curso;
+            alumnoDentro=alumno;
+        }
+    }
+    dentro=tabla2.buscar((int)CursoDentro, alumnoDentro); 
+    fuera=tabla2.buscar(5, alumno); 
+    cout<<"Buscar existente: ";
+    if(dentro)
+        cout<<"EXISTE";
+    else
+        cout<<"NO EXISTE";
+    cout<<"\nBuscar no existente: ";
+    if(fuera)
+        cout<<"EXISTE";
+    else
+        cout<<"NO EXISTE";
     cout<<"\n";
+    
+    /*fin*/
     
     return 0;
 }
