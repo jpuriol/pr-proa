@@ -1,17 +1,17 @@
 jpuriol@linux-txlv:~/Código/pr-proa/pr4> ./memcost1.out
-Tiempo estático: 0.0336839
-Tiempo dinámico (punteros básicos): 0.313172
--Diferencia: 0.279488
-Tiempo dinámico (unique_ptr): 0.333417
--Diferencia: 0.0202452
-Tiempo dinámico (shared_ptr): 0.681024
--Diferencia: 0.367852
+Tiempo estático: 0.0389899
+Tiempo dinámico (punteros básicos): 0.36234
+-Diferencia: 0.32335
+Tiempo dinámico (unique_ptr): 0.402974
+-Diferencia: 0.040634
+Tiempo dinámico (shared_ptr): 0.825394
+-Diferencia: 0.463054
 
 jpuriol@linux-txlv:~/Código/pr-proa/pr4> ./memcost2.out
-Tiempo estático: 0.0316279
-Tiempo dinámico (punteros básicos): 3.25401
--Diferencia: 3.22238
-Tiempo dinámico (unique_ptr): 3.24547
--Diferencia: -0.00853531
-Tiempo dinámico (shared_ptr): 3.61405
--Diferencia: 0.360049
+Tiempo estático: 0.0409266
+Tiempo dinámico (punteros básicos): 4.61245
+-Diferencia: 4.57152
+Tiempo dinámico (unique_ptr): 4.61031
+-Diferencia: -0.00214278
+Tiempo dinámico (shared_ptr): 5.05599
+-Diferencia: 0.443536

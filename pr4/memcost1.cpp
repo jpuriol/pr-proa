@@ -3,7 +3,7 @@
 using namespace std;
 
 const int NUMERO_EJECUCIONES = 10000;
-const int N_ELEM = 1000;
+const int N_ELEM = 1200;
 
 struct Prueba
 {
