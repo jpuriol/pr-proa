@@ -26,12 +26,11 @@ public:
         TipoDato dato;
     };
         
-    Tabla(unsigned); 
+    Tabla(unsigned tam) { t.resize(tam); }; 
     bool buscar(TipoClave, TipoDato&);
     void insertar(TipoClave, const TipoDato&); 
     unsigned hash(int) const;
     unsigned hash(string) const;
-    unsigned hash(TipoClave) const;
     void mostrar(ostream & sal) const;
 
 private:
@@ -90,21 +89,11 @@ void Tabla<TipoClave,TipoDato>::mostrar(std::ostream & sal) const
     }
 }
 
-/**
- * Hash function for strings
- * @param clave Key
- */ 
-template <typename TipoClave,typename TipoDato> 
-unsigned Tabla<TipoClave,TipoDato>::hash(TipoClave clave) const
-{
-    return 1;
-}
 template <typename TipoClave,typename TipoDato> 
 unsigned Tabla<TipoClave,TipoDato>::hash(string clave) const
 {
     unsigned long h = 5381;
     
-    // Solo valido para strings
     for(unsigned i = 0; i < clave.size(); i++)
         h = ((h << 5) + h) + clave[i];
         
@@ -113,7 +102,6 @@ unsigned Tabla<TipoClave,TipoDato>::hash(string clave) const
 template <typename TipoClave,typename TipoDato> 
 unsigned Tabla<TipoClave,TipoDato>::hash(int clave) const
 {
-    //Para int
     return (clave )% t.size();
 }
 
