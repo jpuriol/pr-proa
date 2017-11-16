@@ -1,13 +1,14 @@
-todo: test_tabla
+todo: test_tabla 
 
-clase.o: clase.h clase.cpp
-	g++ -std=c++11 -Wall -o -O2
 
-main.o: main.cpp clase.h
-	g++ -std=c++11 -Wall -o -O2
+alumno.o: alumno.h alumno.cpp
+	g++ -std=c++11 -Wall -O2 -c alumno.cpp
 
-main: main.o clase.o
-	g++ -std=c++11 -Wall main.o clase.o -o main -O2
-	
+tabla.o: tabla.h alumno.h tabla.cpp
+	g++ -std=c++11 -Wall -O2 -c tabla.cpp
+
+test_tabla: alumno.o tabla_t.h
+	g++ -std=c++11 -Wall -o -O2 alumno.o test_tabla.cpp -o test_tabla.out
+
 clean:
-	rm  *.o
+	rm -f  *.o test_tabla.out
