@@ -15,7 +15,7 @@ using std::string;
 using std::vector;
 using std::ostream;
 
-template <typename TClave, typename TDato>
+template <typename TClave, typename TDato, template <typename Elem> class TContenedor=vector>
 class Tabla
 {
 public:
@@ -27,14 +27,21 @@ public:
     };
         
     Tabla(unsigned tam) { t.resize(tam); }; 
-    bool buscar(TipoClave, TipoDato&);
-    void insertar(TipoClave, const TipoDato&); 
+    
     unsigned hash(int) const;
     unsigned hash(string) const;
+    bool buscar(TipoClave, TipoDato&);
+
+    void insertar(TipoClave clave, const TipoDato& valor) { 
+        unsigned i;
+        i = hash(clave);
+        t[i].push_back(Celda{clave,valor} );
+    };
+
     void mostrar(ostream & sal) const;
 
 private:
-    typedef vector<Celda> ListaDatos; 
+    typedef TContenedor<Celda> ListaDatos; 
     vector<ListaDatos> t;
 };
 
@@ -43,13 +50,13 @@ private:
  * @param clave Key of the element
  * @param valor Value to be stored
  */
-template <typename TipoClave,typename TipoDato> 
+/*template <typename TipoClave,typename TipoDato, template <typename Elem> class TContenedor=vector>
 void Tabla<TipoClave,TipoDato>::insertar(TipoClave clave, const TipoDato & valor)
 {
     unsigned i;
     i = hash(clave);
     t[i].push_back(Celda{clave,valor} );
-}
+}*/
 
 /**
  * Search for an element
@@ -83,8 +90,8 @@ void Tabla<TipoClave,TipoDato>::mostrar(std::ostream & sal) const
     for(unsigned i = 0; i < t.size(); i++)
     {
         sal << i << ":" ;
-        for(unsigned j = 0; j < t[i].size(); j++)
-            sal << t[i][j].dato << " -> ";
+        for(auto it = t[i].begin(); it != t[i].end(); ++it)
+            sal << *it << "->";
         sal << std::endl;
     }
 }

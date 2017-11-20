@@ -63,7 +63,7 @@ int main()
         cout<<"NO EXISTE";
     cout<<"\n\n\n";
     
-    Tabla<int,Alumno> tabla2 =Tabla<int,Alumno>(400); 
+    Tabla<int,Alumno> tabla2(400); 
     for(int i=0;i<200;i++)
     {
         curso=aleatorio1a4();
