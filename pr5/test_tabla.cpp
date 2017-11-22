@@ -16,15 +16,25 @@
 #include <time.h>
 #include <iostream>
 #include <stdlib.h>
+#include <vector>
+#include <list>
 #include "alumno.h"
 #include "tabla_t.h"
 using namespace std;
 
 int aleatorio1a4();
+class MyHash {
+    public:
+        static unsigned hash(long const & clave)
+        {
+            std::cout<<"Personal"<<std::endl;
+            return clave%400;
+        }
+};
 
 /**
 *
-* Main: Genera una tabla con 200 alumnos, de 400 celdas de tama�o. Busca aquel que puso en la posici�n 100 y uno que no puede aparecer
+* Main: Genera una tabla con 200 alumnos, de 400 celdas de tamano. Busca aquel que puso en la posicion 100 y uno que no puede aparecer
 *
 */
 int main()
@@ -32,7 +42,7 @@ int main()
     srand (time(NULL));
     int curso, CursoDentro=1;
     string DNIdentro;
-    Tabla<string,Alumno> tabla(400); 
+    Tabla<string,Alumno,list> tabla(400); 
     Alumno alumno,alumnoDentro;
     bool dentro,fuera;
     for(int i=0;i<200;i++)
@@ -62,7 +72,8 @@ int main()
         cout<<"NO EXISTE";
     cout<<"\n\n\n";
     
-    Tabla<int,Alumno> tabla2(400); 
+    
+    Tabla<int,Alumno,list> tabla2(400); 
     for(int i=0;i<200;i++)
     {
         curso=aleatorio1a4();
