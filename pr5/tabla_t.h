@@ -15,7 +15,7 @@ using std::string;
 using std::vector;
 using std::ostream;
 
-template <typename TClave, typename TDato, template <typename Elem> class TContenedor=vector>
+template <typename TClave, typename TDato, template <typename> class TContenedor = vector>
 class Tabla
 {
 public:
@@ -32,11 +32,7 @@ public:
     unsigned hash(string) const;
     bool buscar(TipoClave, TipoDato&);
 
-    void insertar(TipoClave clave, const TipoDato& valor) { 
-        unsigned i;
-        i = hash(clave);
-        t[i].push_back(Celda{clave,valor} );
-    };
+    void insertar(TipoClave clave, const TipoDato& valor);
 
     void mostrar(ostream & sal) const;
 
@@ -50,13 +46,13 @@ private:
  * @param clave Key of the element
  * @param valor Value to be stored
  */
-/*template <typename TipoClave,typename TipoDato, template <typename Elem> class TContenedor=vector>
+template <typename TipoClave, typename TipoDato, template <typename> class TContenedor=vector>
 void Tabla<TipoClave,TipoDato>::insertar(TipoClave clave, const TipoDato & valor)
 {
     unsigned i;
     i = hash(clave);
     t[i].push_back(Celda{clave,valor} );
-}*/
+}
 
 /**
  * Search for an element
@@ -64,7 +60,7 @@ void Tabla<TipoClave,TipoDato>::insertar(TipoClave clave, const TipoDato & valor
  * @param valor Value founded with key "clave"
  * @return true if element founded, false otherwise
  */
-template <typename TipoClave,typename TipoDato> 
+template <typename TipoClave, typename TipoDato, template <typename> class TContenedor=vector>
 bool Tabla<TipoClave,TipoDato>::buscar(TipoClave clave, TipoDato & valor) 
 {
     unsigned i;
@@ -84,7 +80,7 @@ bool Tabla<TipoClave,TipoDato>::buscar(TipoClave clave, TipoDato & valor)
  * Write the hash table to a stream
  * @param sal output stream
  */
-template <typename TipoClave,typename TipoDato> 
+template <typename TipoClave, typename TipoDato, template <typename> class TContenedor=vector>
 void Tabla<TipoClave,TipoDato>::mostrar(std::ostream & sal) const
 {
     for(unsigned i = 0; i < t.size(); i++)
@@ -96,7 +92,7 @@ void Tabla<TipoClave,TipoDato>::mostrar(std::ostream & sal) const
     }
 }
 
-template <typename TipoClave,typename TipoDato> 
+template <typename TipoClave, typename TipoDato, template <typename> class TContenedor=vector>
 unsigned Tabla<TipoClave,TipoDato>::hash(string clave) const
 {
     unsigned long h = 5381;
@@ -106,7 +102,8 @@ unsigned Tabla<TipoClave,TipoDato>::hash(string clave) const
         
     return h % t.size();
 }
-template <typename TipoClave,typename TipoDato> 
+
+template <typename TipoClave, typename TipoDato, template <typename> class TContenedor=vector>
 unsigned Tabla<TipoClave,TipoDato>::hash(int clave) const
 {
     return (clave )% t.size();

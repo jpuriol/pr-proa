@@ -2,7 +2,6 @@
 * @file sort_tabla.cpp
 *
 * Practicas de PROA
-* Previo Practica 5.
 *
 * @author Ignacio Gomis Lli
 * @author Juan Pablo Uriol Balbin
