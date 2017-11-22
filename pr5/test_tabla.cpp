@@ -23,6 +23,7 @@
 using namespace std;
 
 int aleatorio1a4();
+int DNItoInt(string);
 class MyHash {
     public:
         static unsigned hash(long const & clave)
@@ -40,8 +41,7 @@ class MyHash {
 int main()
 {
     srand (time(NULL));
-    int curso, CursoDentro=1;
-    string DNIdentro;
+    int curso;
     Tabla<string,Alumno,list> tabla(400); 
     Alumno alumno,alumnoDentro;
     bool dentro,fuera;
@@ -52,11 +52,10 @@ int main()
         tabla.insertar(alumno.getDNI(),alumno);
         if(i==100)
         {
-            DNIdentro=alumno.getDNI();
             alumnoDentro=alumno;
         }
     }
-    dentro=tabla.buscar(DNIdentro, alumnoDentro); 
+    dentro=tabla.buscar(alumnoDentro.getDNI(), alumnoDentro); 
     curso=aleatorio1a4();
     alumno=Alumno(curso);
     fuera=tabla.buscar("DNInoExistente", alumno); 
@@ -78,15 +77,14 @@ int main()
     {
         curso=aleatorio1a4();
         alumno=Alumno(curso);
-        tabla2.insertar(curso,alumno);
+        tabla2.insertar(DNItoInt(alumno.getDNI()),alumno);
         if(i==100)
         {
-            CursoDentro=curso;
             alumnoDentro=alumno;
         }
     }
-    dentro=tabla2.buscar(CursoDentro, alumnoDentro); 
-    fuera=tabla2.buscar(5, alumno); 
+    dentro=tabla2.buscar(DNItoInt(alumnoDentro.getDNI()), alumnoDentro); 
+    fuera=tabla2.buscar(0, alumno); 
     cout<<"Buscar existente: ";
     if(dentro)
         cout<<"EXISTE";
@@ -116,4 +114,13 @@ int aleatorio1a4()
     num=num&3;
     ++num;
     return num;
+}
+
+/**
+ * Convierte string DNI a int DNI (mismo sin la letra)
+ */
+int DNItoInt(string DNI)
+{
+    DNI.resize(8);
+    return atoi( DNI.c_str() );
 }
