@@ -24,12 +24,13 @@ using namespace std;
 
 int aleatorio1a4();
 int DNItoInt(string);
+
 class MyHash {
     public:
-        static unsigned hash(long const & clave)
+        static unsigned hash(long const & clave, unsigned size)
         {
-            std::cout<<"Personal"<<std::endl;
-            return clave%400;
+            std::cout<<"P";
+            return clave%size;
         }
 };
 
@@ -42,7 +43,10 @@ int main()
 {
     srand (time(NULL));
     int curso;
-    Tabla<string,Alumno,list> tabla(400); 
+    
+    cout<<"Probando con claves strings y todo Default\n";
+    
+    Tabla<string,Alumno> tabla(400); 
     Alumno alumno,alumnoDentro;
     bool dentro,fuera;
     for(int i=0;i<200;i++)
@@ -59,7 +63,7 @@ int main()
     curso=aleatorio1a4();
     alumno=Alumno(curso);
     fuera=tabla.buscar("DNInoExistente", alumno); 
-    cout<<"Buscar existente: ";
+    cout<<"\nBuscar existente: ";
     if(dentro)
         cout<<"EXISTE";
     else
@@ -71,6 +75,7 @@ int main()
         cout<<"NO EXISTE";
     cout<<"\n\n\n";
     
+    cout<<"Probando con claves ints y con una lista\n";
     
     Tabla<int,Alumno,list> tabla2(400); 
     for(int i=0;i<200;i++)
@@ -85,7 +90,7 @@ int main()
     }
     dentro=tabla2.buscar(DNItoInt(alumnoDentro.getDNI()), alumnoDentro); 
     fuera=tabla2.buscar(0, alumno); 
-    cout<<"Buscar existente: ";
+    cout<<"\nBuscar existente: ";
     if(dentro)
         cout<<"EXISTE";
     else
@@ -96,6 +101,34 @@ int main()
     else
         cout<<"NO EXISTE";
     cout<<"\n";
+    
+    cout<<"Probando con mi funcion Hash, necesita ser suministrado el parametro 3\n";
+    
+    Tabla<int,Alumno,vector,MyHash> tabla3(400); 
+    for(int i=0;i<200;i++)
+    {
+        curso=aleatorio1a4();
+        alumno=Alumno(curso);
+        tabla3.insertar(DNItoInt(alumno.getDNI()),alumno);
+        if(i==100)
+        {
+            alumnoDentro=alumno;
+        }
+    }
+    dentro=tabla3.buscar(DNItoInt(alumnoDentro.getDNI()), alumnoDentro); 
+    fuera=tabla3.buscar(0, alumno); 
+    cout<<"\nBuscar existente: ";
+    if(dentro)
+        cout<<"EXISTE";
+    else
+        cout<<"NO EXISTE";
+    cout<<"\nBuscar no existente: ";
+    if(fuera)
+        cout<<"EXISTE";
+    else
+        cout<<"NO EXISTE";
+    cout<<"\n";
+    
     
     /*fin*/
     

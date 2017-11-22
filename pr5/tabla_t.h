@@ -9,17 +9,50 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include "alumno.h"
 
 using std::string;
 using std::vector;
 using std::ostream;
 
+/**
+ *  Clase DefaultHash
+ *  Operaciones: hash(clave, size)
+ *  Solo soporta Enteros y Stings, para cualquier otro tipo, no usa la clave hash!
+ */
+class defaultHash {
+    public:
+        unsigned hash(int clave,unsigned size) const 
+        {
+            std::cout<<"I";
+            return (clave )% size;
+        }
+        unsigned hash(string clave,unsigned size) const
+        {
+            std::cout<<"S";
+            unsigned long h = 5381;
+            for(unsigned i = 0; i < clave.size(); i++)
+                h = ((h << 5) + h) + clave[i];
+        return h % size;
+        };
+        template<typename T>
+        unsigned hash(T clave,unsigned size) const 
+        {
+            std::cout<<"U";
+            (void)clave;
+            (void) size;
+            return 1;
+        }
+};
+
+
 template <  typename TClave, 
             typename TDato, 
             template <  typename Elem,
                         typename Alloc=std::allocator<Elem>> 
-            class TContenedor = vector>
+            class TContenedor = vector,
+            typename Hash = defaultHash>
 class Tabla
 {
 public:
@@ -32,8 +65,10 @@ public:
         
     Tabla(unsigned tam) { t.resize(tam); }; 
     
-    unsigned hash(int) const;
-    unsigned hash(string) const;
+    unsigned hash(TClave) const;
+    /*unsigned hash(int) const;
+    unsigned hash(string) const;*/
+   
     bool buscar(TipoClave, TipoDato&);
 
     void insertar(TipoClave clave, const TipoDato& valor);
@@ -43,6 +78,7 @@ public:
 private:
     typedef TContenedor<Celda> ListaDatos; 
     vector<ListaDatos> t;
+    Hash h;
 };
 
 /**
@@ -50,8 +86,8 @@ private:
  * @param clave Key of the element
  * @param valor Value to be stored
  */
-template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor>
-void Tabla<TipoClave,TipoDato,TContenedor>::insertar(TipoClave clave, const TipoDato & valor)
+template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor, typename Hash>
+void Tabla<TipoClave,TipoDato,TContenedor, Hash>::insertar(TipoClave clave, const TipoDato & valor)
 {
     unsigned i;
     i = hash(clave);
@@ -64,8 +100,8 @@ void Tabla<TipoClave,TipoDato,TContenedor>::insertar(TipoClave clave, const Tipo
  * @param valor Value founded with key "clave"
  * @return true if element founded, false otherwise
  */
-template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor>
-bool Tabla<TipoClave,TipoDato, TContenedor>::buscar(TipoClave clave, TipoDato & valor) 
+template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor, typename Hash>
+bool Tabla<TipoClave,TipoDato, TContenedor,Hash>::buscar(TipoClave clave, TipoDato & valor) 
 {
     unsigned i;
     i = hash(clave);
@@ -84,8 +120,8 @@ bool Tabla<TipoClave,TipoDato, TContenedor>::buscar(TipoClave clave, TipoDato & 
  * Write the hash table to a stream
  * @param sal output stream
  */
-template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor>
-void Tabla<TipoClave,TipoDato,TContenedor>::mostrar(std::ostream & sal) const
+template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor, typename Hash>
+void Tabla<TipoClave,TipoDato,TContenedor,Hash>::mostrar(std::ostream & sal) const
 {
     for(unsigned i = 0; i < t.size(); i++)
     {
@@ -96,11 +132,16 @@ void Tabla<TipoClave,TipoDato,TContenedor>::mostrar(std::ostream & sal) const
     }
 }
 
+template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor, typename Hash>
+unsigned Tabla<TipoClave,TipoDato,TContenedor,Hash>::hash(TipoClave clave) const
+{
+    return h.hash(clave,t.size());
+}
 /**
  * Funcion hash para strings
  * @param clave para el hash
  * @return indice de la tabla
- */
+ *//*
 template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor>
 unsigned Tabla<TipoClave,TipoDato,TContenedor>::hash(string clave) const
 {
@@ -110,17 +151,18 @@ unsigned Tabla<TipoClave,TipoDato,TContenedor>::hash(string clave) const
         h = ((h << 5) + h) + clave[i];
         
     return h % t.size();
-}
+}*/
 
 /**
  * Funcion hash para enteros
  * @param clave para el hash
  * @return indice de la tabla
- */
+ *//*
 template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor>
 unsigned Tabla<TipoClave,TipoDato,TContenedor>::hash(int clave) const
 {
     return (clave )% t.size();
-}
+}*/ 
+
 
 #endif
