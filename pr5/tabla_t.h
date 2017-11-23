@@ -26,7 +26,7 @@ class defaultHash {
         unsigned hash(int clave,unsigned size) const 
         {
             std::cout<<"I";
-            return (clave )% size;
+            return (clave * 5381 )% size;
         }
         unsigned hash(string clave,unsigned size) const
         {
