@@ -10,6 +10,43 @@
 #define _LISTA_H
 
 #include<iostream>
+#include <iterator>
+#include <list>
+
+//Consultar C++ the standart library 9.6
+template <  typename Container >
+class ListaIterator : public std::iterator <std::bidirectional_iterator_tag, type, std::ptrdiff_t, type*, type&>
+{
+protected:
+    Container& container; //Elemento apuntado
+    
+public:
+    explicit ListaIterator (Container& c) : Container(c) {
+    }
+
+    void operator= (const typename Container::value_type& value) {
+        this.container=value;
+    }
+    
+    bool operator== (const typename Container::value_type& value) {
+        return this==value;
+    }
+    
+    bool operator!= (const typename Container::value_type& value) {
+        return this!=value;
+    }
+
+    Container& operator* () {
+        return container;
+    }
+    
+    
+    void operator++ () {
+        this=container.sig;
+    }
+
+};
+
 
 /**
  * Lista simplemente enlazada
@@ -31,6 +68,8 @@ public:
     Lista():ptr(nullptr) {}
     void push_front(const T &);
     void mostrar() const;
+    ListaIterator<T> begin();
+    ListaIterator<T> end();
 };
 
 /**
@@ -60,5 +99,26 @@ void Lista<T>::mostrar() const
         aux = aux->sig;
     }
 }
+
+/**
+ * Devuelve puntero al final
+ */
+template<typename T>
+ListaIterator<T> Lista<T>::end() 
+{
+    PtrNodo aux = nullptr;
+    return (ListaIterator<T>(aux));
+}
+
+/**
+ * Devuelve puntero al principio
+ */
+template<typename T>
+ListaIterator<T> Lista<T>::begin() 
+{
+    PtrNodo aux = ptr;
+    return (ListaIterator<T>(aux));
+}
+
 
 #endif

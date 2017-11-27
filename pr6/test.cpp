@@ -6,8 +6,6 @@ void testLista();
 void testTabla();
 template<typename It>
 void out(It begin, It end);
-Alumno getMin(iterador<Lista> begin, iterador<Lista> end);
-Alumno getMin(iterador<Tabla> begin, iterador<Tabla> end);
 
 int main()
 {
@@ -30,7 +28,7 @@ void testLista()
     out(lista.begin(),lista.end());
     std::copy(lista.begin(), lista.end(), vect.begin());
     out(vect.begin(), vect.end());
-    cout<<"Minimo: "<<endl<<getMin(lista.begin(), lista.end())<<endl;
+    //cout<<"Minimo: "<<endl<<getMin(lista.begin(), lista.end())<<endl;
     
     cout<<"Lista aun sin hacer"<<endl;
 }
@@ -48,7 +46,7 @@ void out(It begin, It end)
         cout<<*it<<endl;
     }
 }
-
+/*
 Alumno getMin(iterador<Lista> begin, iterador<Lista> end)
 {
     int min=100000000;
@@ -78,4 +76,4 @@ Alumno getMin(iterador<Tabla> begin, iterador<Tabla> end)
     }
     return minA;
 }
-
+*/
