@@ -87,9 +87,9 @@ std::ostream & operator<<(std::ostream & out, const Alumno & alu)
  * Devuelve el DNI como valor numerico
  * @return DNI como int
  */
-int Alumno::GetDNInum()
+int Alumno::GetDNInum() const
 {
-    string DNI=this.dni;
+    string DNI=dni;
     DNI.resize(8);
     return atoi( DNI.c_str() );
 }
