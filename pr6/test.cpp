@@ -39,15 +39,16 @@ void testLista()
     copy(lista.begin(), lista.end(), vect.begin());    //<-Origen de errores
     
     cout<<"RECORRIENDO VECTOR:"<<endl;
-    out(vect.begin(), vect.end());
-    //min_element (funcion de algorithm)*/
+    out(vect.begin(), vect.end());*/
+    cout << "Mas Pequeno: "<< endl << *std::min_element(lista.begin(),lista.end())<<endl<<endl;
+    
 }
 
 void testTabla()
 {
     Alumno al;
     Tabla tabla(20);
-    vector<Alumno> vect;
+    vector<Tabla::Celda> vect;
     cout<<"INSERTANDO, SIN ORDEN:"<<endl;
     for(int i=0;i<10;i++)
     {
@@ -62,8 +63,9 @@ void testTabla()
     copy(tabla.begin(), tabla.end(), vect.begin());    //<-Origen de errores
     
     cout<<"RECORRIENDO VECTOR:"<<endl;
-    out(vect.begin(), vect.end());
-    //min_element (funcion de algorithm)*/
+    out(vect.begin(), vect.end());*/
+    cout << "Mas Pequeno: "<< endl << *std::min_element(tabla.begin(),tabla.end())<<endl<<endl;
+    
 }
 
 template<typename It>
@@ -89,6 +91,6 @@ void testStl()
     
     cout<<"RECORRIENDO DEST:"<<endl;
     out(dest.begin(), dest.end());
-    //min_element (funcion de algorithm)
+    cout << "Mas Pequeno: "<< endl << *std::min_element(orig.begin(),orig.end())<<endl<<endl;
 }
 

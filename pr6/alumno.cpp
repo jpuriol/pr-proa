@@ -93,3 +93,8 @@ int Alumno::GetDNInum() const
     DNI.resize(8);
     return atoi( DNI.c_str() );
 }
+
+
+bool operator< (Alumno al1,Alumno al2){
+        return (al1.dni<al2.dni);
+    }

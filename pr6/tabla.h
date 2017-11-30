@@ -16,19 +16,20 @@ using std::vector;
 class Tabla;
 
 
-template < typename Cell >
+template < typename Cell, template <  typename Elem,typename Alloc=std::allocator<Elem>> class Contenedor >
 class TablaIterator : public std::iterator <std::forward_iterator_tag, Cell>
 {
 protected:
+    typedef Contenedor<Cell> contenedor;
     typedef Cell * Pointer;
     Pointer pointer; 
-    typename vector<vector<Cell>>::iterator ovIt;
-    typename vector<vector<Cell>>::iterator ovItEnd;
-    typename vector<Cell>::iterator subIt;
-    typename vector<Cell>::iterator subItEnd;
+    typename vector<contenedor>::iterator ovIt;
+    typename vector<contenedor>::iterator ovItEnd;
+    typename contenedor::iterator subIt;
+    typename contenedor::iterator subItEnd;
     
 public:
-    TablaIterator<Cell> (vector<vector<Cell>> & t, bool inicio) {
+    TablaIterator<Cell,Contenedor> (vector<vector<Cell>> & t, bool inicio) {
         if(inicio)
         {
             ovIt=t.begin();
@@ -43,11 +44,11 @@ public:
         subItEnd=(*ovIt).end();
     }
     
-    bool operator== (const TablaIterator<Cell> value) {
+    bool operator== (const TablaIterator<Cell,Contenedor> value) {
         return (ovIt == value.ovIt&&subIt == value.subIt);
     }
     
-    bool operator!= (const TablaIterator<Cell> value) {
+    bool operator!= (const TablaIterator<Cell,Contenedor> value) {
         return !(ovIt == value.ovIt && subIt == value.subIt);
     }
 
@@ -55,7 +56,7 @@ public:
         return *subIt;
     }
     
-    TablaIterator<Cell> operator++ () { //++i
+    TablaIterator<Cell,Contenedor> operator++ () { //++i
         if(ovItEnd!=ovIt)
         {
             ++subIt;
@@ -81,8 +82,8 @@ public:
     return *this;
     }
 
-    TablaIterator<Cell> operator++ (int) {//i++
-        TablaIterator<Cell> tmp(pointer);
+    TablaIterator<Cell,Contenedor> operator++ (int) {//i++
+        TablaIterator<Cell,Contenedor> tmp(pointer);
         ++tmp();
         return tmp;
     }
@@ -105,6 +106,10 @@ public:
             out << "Dato: " <<std::endl<<cel.dato  << std::endl;
             return out;
         };
+        friend bool operator < (Celda cel1, Celda cel2)
+        {
+            return cel1.dato<cel2.dato;
+        }
     };
         
     Tabla(unsigned); 
@@ -116,17 +121,17 @@ public:
     /**
      * Punteros inicio y fin
      */
-    TablaIterator<Celda> end(){
-        return (TablaIterator<Celda>(t,false));
+    TablaIterator<Celda,vector> end(){
+        return (TablaIterator<Celda,vector>(t,false));
         }
-    TablaIterator<Celda> begin(){
-        return (TablaIterator<Celda>(t,true));
+    TablaIterator<Celda,vector> begin(){
+        return (TablaIterator<Celda,vector>(t,true));
         }
 
 private:
     typedef vector<Celda> ListaDatos; 
     vector<ListaDatos> t;
-    friend class TablaIterator<Celda>;
+    friend class TablaIterator<Celda,vector>;
 };
 
 #endif

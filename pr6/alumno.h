@@ -30,7 +30,7 @@ public:
     string getDNI() const 
         {return dni; };
     int GetDNInum() const;
-        
+    friend bool operator< (Alumno,Alumno);
     friend std::ostream & operator<<(std::ostream &, const Alumno &);
              
 };
