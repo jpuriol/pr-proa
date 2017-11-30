@@ -12,16 +12,15 @@
 #include<iostream>
 #include <iterator>
 #include <list>
-template <  typename T >
-class Lista;
 
 //Consultar C++ the standart library 9.6
 template <  typename T >
 class ListaIterator : public std::iterator <std::forward_iterator_tag, T>
 {
 protected:
-    typedef typename Lista<T>::PtrNodo Pointer;
-    Pointer pointer; 
+    typedef Lista<T>::PtrNodo Pointer;
+    Pointer pointer;
+    //typename Lista<T>::PtrNodo pointer;
 
     
 public:
@@ -29,28 +28,35 @@ public:
         pointer = p;
     }
     
-    bool operator== (const ListaIterator<T> value) {
+    bool operator== (const ListaIterator<Pointer> value) {
         return (pointer == value.pointer);
     }
     
-    bool operator!= (const ListaIterator<T> value) {
+    bool operator!= (const ListaIterator<Pointer> value) {
         return !(pointer == value.pointer);
     }
 
-    T operator* () {
+    Pointer& operator* () {
         return pointer->valor;
     }
     
-    ListaIterator<T> operator++ () { //++i
+    void operator++ () { //++i
         if(pointer!=nullptr)
             pointer=pointer->sig;
-        return pointer;
     }
 
-    ListaIterator<T> operator++ (int) {//i++
-        ListaIterator<T> tmp(pointer);
-        ++tmp();
-        return tmp;
+    void operator++ (int) {//i++
+        if(pointer!=nullptr)
+            pointer=pointer->sig;
+    }
+    
+    static ListIterator<Pointer>* begin(const Lista<T> & lista) {
+        ListaIterator<Pointer>(lista.ptr) inicio;
+        return *inicio;
+    }
+    
+    static ListIterator<Pointer>* end() {
+        return nullptr;
     }
 };
 
@@ -62,13 +68,14 @@ public:
 template<typename T>
 class Lista
 {
+private:
     struct Nodo
     {
         T valor;
         Nodo * sig;
         bool operator == (const Nodo value)
         {
-            return(sig==value.sig&&valor==value.valor);
+            return(sig==value.sig && valor==value.valor);
         };
         void operator = (Nodo value)
         {
@@ -80,18 +87,20 @@ class Lista
     typedef Nodo * PtrNodo;
     
     PtrNodo ptr;
-    friend class ListaIterator<T>;
     
+    friend ListIterator<Pointer> ListaIterator::begin(const Lista<T> & lista);
+    friend ListIterator<Pointer> ListaIterator::end();
 public:
     Lista():ptr(nullptr) {}
     void push_front(const T &);
     void mostrar() const;
     
-    ListaIterator<T> end(){
-        return (ListaIterator<T>(nullptr));
-        }
-    ListaIterator<T> begin(){
-        return (ListaIterator<T>(ptr));}
+    ListaIterator<PtrNodo>* end(){
+        return ListaIterator::end(this);
+    }
+    ListaIterator<PtrNodo>* begin(){
+        return ListaIterator;
+    }
 };
 
 /**

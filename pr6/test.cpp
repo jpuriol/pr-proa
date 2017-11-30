@@ -1,15 +1,20 @@
 #include "lista.h"
 #include "tabla.h"
+#include <algorithm>
 using namespace std;
 
 void testLista();
 void testTabla();
+void testStl();
 template<typename It>
 void out(It begin, It end);
 
 int main()
 {
+    //testStl();
     testLista();
+    for(int i=0;i<5;i++)
+        cout<<endl;
     testTabla();
     return 0;
 }
@@ -17,28 +22,48 @@ int main()
 
 void testLista()
 {
-    
     Alumno al;
     Lista<Alumno> lista;
     vector<Alumno> vect;
+    cout<<"INSERTANDO, COMIENZA POR EL FINAL:"<<endl;
     for(int i=0;i<10;i++)
     {
+        
         al=Alumno(1);
+        cout<<al<<endl;
         lista.push_front(al);
     }
-    auto begin=lista.begin();
-    auto end=lista.end();
-    /*out(begin,end);
-    std::copy(begin, end, vect.begin());    //<-Origen de errores
-    out(vect.begin(), vect.end());
-    //cout<<"Minimo: "<<endl<<getMin(begin, end)<<endl;*/
+    cout<<endl<<"RECORRIENDO OBJETO:"<<endl;
+    out(lista.begin(),lista.end());
+    /*
+    copy(lista.begin(), lista.end(), vect.begin());    //<-Origen de errores
     
-    cout<<"Lista aun sin hacer"<<endl;
+    cout<<"RECORRIENDO VECTOR:"<<endl;
+    out(vect.begin(), vect.end());
+    //min_element (funcion de algorithm)*/
 }
 
 void testTabla()
 {
-    cout<<"Tabla aun sin hacer"<<endl;
+    Alumno al;
+    Tabla tabla(20);
+    vector<Alumno> vect;
+    cout<<"INSERTANDO, SIN ORDEN:"<<endl;
+    for(int i=0;i<10;i++)
+    {
+        
+        al=Alumno(1);
+        cout<<al<<endl;
+        tabla.insertar(al.getDNI(),al);
+    }
+    cout<<endl<<"RECORRIENDO OBJETO:"<<endl;
+    //out(tabla.begin(),tabla.end());
+    /*
+    copy(tabla.begin(), tabla.end(), vect.begin());    //<-Origen de errores
+    
+    cout<<"RECORRIENDO VECTOR:"<<endl;
+    out(vect.begin(), vect.end());
+    //min_element (funcion de algorithm)*/
 }
 
 template<typename It>
@@ -46,37 +71,24 @@ void out(It begin, It end)
 {
     for(It it=begin;it!=end;++it)
     {
-        cout<<*it<<endl;        //<-Origen de errores
+        cout<<*it<<endl;
     }
-}
-/*
-Alumno getMin(iterador<Lista> begin, iterador<Lista> end)
-{
-    int min=100000000;
-    Alumno minA;
-    for(auto it=begin;it!=end;++it)
-    {
-        if(*it.GetDNInum()<min)
-        {
-            min=*it.GetDNInum();
-            minA=*it;
-        }
-    }
-    return minA;
 }
 
-Alumno getMin(iterador<Tabla> begin, iterador<Tabla> end)
+void testStl()
 {
-    int min=100000000;
-    Alumno minA;
-    for(auto it=begin;it!=end;++it)
+    vector<int> orig;
+    vector<int> dest;
+    for(int i=0;i<10;i++)
     {
-        if(*it.GetDNInum()<min)
-        {
-            min=it->clave.GetDNInum();
-            minA=*it;
-        }
+        orig.push_back(i);
     }
-    return minA;
+    cout<<"RECORRIENDO ORIG:"<<endl;
+    out(orig.begin(),orig.end());
+    copy(orig.begin(), orig.end(), dest.begin());    //<-Origen de errores
+    
+    cout<<"RECORRIENDO DEST:"<<endl;
+    out(dest.begin(), dest.end());
+    //min_element (funcion de algorithm)
 }
-*/
+

@@ -18,7 +18,7 @@ string Alumno::list_nombre[] = {
 "Angel",
 "Raul",
 "Jose",
-"Iñigo",
+"Inigo",
 "Jose Antonio",
 "Julio",
 "Beatriz",
