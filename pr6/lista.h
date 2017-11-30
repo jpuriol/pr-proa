@@ -13,10 +13,9 @@
 #include <iterator>
 #include <list>
 
-//Consultar C++ the standart library 9.6
+//Consultar C++ the standard library 9.6
 template <  typename Pointer >
-class ListaIterator : public std::iterator <std::bidirectional_iterator_tag, Pointer, std::ptrdiff_t, Pointer*, Pointer&>
-{
+class ListaIterator : public std::iterator <std::bidirectional_iterator_tag, Pointer, std::ptrdiff_t, Pointer*, Pointer&> {
 protected:
     Pointer pointer; 
     
@@ -26,7 +25,8 @@ public:
     }
 
     void operator= (const ListaIterator<Pointer> value) {
-        this.pointer=value.pointer;
+        this->pointer= value.pointer;
+        //this.pointer=value.pointer; // ERROR!
     }
     
     bool operator== (const ListaIterator<Pointer> value) {
@@ -54,18 +54,14 @@ public:
  * @param T Tipo de los elementos de la lista
  */
 template<typename T>
-class Lista
-{
-    struct Nodo
-    {
+class Lista {
+    struct Nodo {
         T valor;
         Nodo * sig;
-        bool operator == (const Nodo value)
-        {
-            return(sig==value.sig&&valor==value.valor);
+        bool operator == (const Nodo value) {
+            return (sig==value.sig && valor==value.valor);
         };
-        void operator = (Nodo value)
-        {
+        void operator = (Nodo value) {
             sig=value.sig;
             valor=value.valor;
         };
@@ -78,6 +74,7 @@ public:
     Lista():ptr(nullptr) {}
     void push_front(const T &);
     void mostrar() const;
+    friend std::ostream& operator<< (std::ostream&, const Lista<T>&);
     
     ListaIterator<PtrNodo> end(){
         PtrNodo null = nullptr;
@@ -92,8 +89,7 @@ public:
  * @param x elemento a añadir
  */
 template<typename T>
-void Lista<T>::push_front(const T & x)
-{
+void Lista<T>::push_front(const T & x) {
     PtrNodo aux = new Nodo;
     aux->valor = x;
     aux->sig = ptr;
@@ -104,13 +100,11 @@ void Lista<T>::push_front(const T & x)
  * Muestra la lista por pantalla
  */
 template<typename T>
-void Lista<T>::mostrar() const
-{
-    PtrNodo aux = ptr;
+friend std::ostream& operator<< (std::ostream& stream, const Lista<T>& lista) {
+    PtrNodo aux = lista.ptr;
     
-    while(aux != nullptr)
-    {
-        std::cout << aux->valor << " ";
+    while(aux != nullptr) {
+        stream << aux->valor << " ";
         aux = aux->sig;
     }
 }
