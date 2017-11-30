@@ -1,5 +1,10 @@
 
 #include "tabla.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <sstream>
 
 /**
  * Constructor of class
@@ -72,3 +77,4 @@ void Tabla::mostrar(std::ostream & sal) const
         sal << std::endl;
     }
 }
+

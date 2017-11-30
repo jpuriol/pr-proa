@@ -57,7 +57,7 @@ void testTabla()
         tabla.insertar(al.getDNI(),al);
     }
     cout<<endl<<"RECORRIENDO OBJETO:"<<endl;
-    //out(tabla.begin(),tabla.end());
+    out(tabla.begin(),tabla.end());
     /*
     copy(tabla.begin(), tabla.end(), vect.begin());    //<-Origen de errores
     
