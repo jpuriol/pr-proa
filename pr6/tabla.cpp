@@ -1,4 +1,10 @@
-
+/**
+ * Implementacion de una tabla
+ * Programacion Avanzada
+ * 
+ * @author F. Barber
+ */
+ 
 #include "tabla.h"
 #include <iostream>
 #include <fstream>

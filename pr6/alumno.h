@@ -1,6 +1,11 @@
 /**
  * Clase para representar alumnos
  * Curso 2014/2015
+ * Programacion Avanzada
+ *
+ * Modificado por Ignacio Gomis y Juan Pablo Uriol
+ * a fecha de 30/12/2017
+ * Agregadas GetDNInum y operator <
  */
 
 #ifndef _ALUMNO_H_
