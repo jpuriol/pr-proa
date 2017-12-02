@@ -1,6 +1,11 @@
 /**
- * Implementación de la clase Alumno
+ * Implementacion de la clase Alumno
  * Curso 2014/2015
+ * Programacion Avanzada
+ * 
+ * Modificado por Ignacio Gomis y Juan Pablo Uriol
+ * a fecha de 30/12/2017
+ * Agregadas GetDNInum y operator <
  */
 
 #include "alumno.h"
@@ -18,7 +23,7 @@ string Alumno::list_nombre[] = {
 "Angel",
 "Raul",
 "Jose",
-"Iñigo",
+"Inigo",
 "Jose Antonio",
 "Julio",
 "Beatriz",
@@ -93,3 +98,13 @@ int Alumno::GetDNInum() const
     DNI.resize(8);
     return atoi( DNI.c_str() );
 }
+
+/**
+ * Compara dos alumnos y devuelve verdadero si el primero es menor que el segundo
+ * @param al1 Primer alumno
+ * @param al2 Segundo alumno
+ * @return bool True si al1<al2 False en caso contrario
+ */
+bool operator< (Alumno al1,Alumno al2){
+        return (al1.dni<al2.dni);
+    }
