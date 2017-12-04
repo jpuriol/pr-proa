@@ -2,13 +2,8 @@
  * Implementacion de una lista simplemente enlazada
  * Programacion Avanzada
  * Curso 2015/2016
- *
- * Modificada para agregar un iterador
- * a fecha de 27/12/2017
- *
+ * 
  * @author F. Barber
- * @author Ignacio Gomis
- * @author Juan Pablo Uriol
  */
 
 #ifndef _LISTA_H
@@ -17,75 +12,40 @@
 #include<iostream>
 #include <iterator>
 #include <list>
-template <  typename T >
-class Lista;
 
-/**
- *  Clase ListaIterator<T>
- *  Iterador sobre una clase lista simplemente enlazada
- *  @param T clase de elementos almacenados en la Lista
- */
-template <  typename T >
-class ListaIterator : public std::iterator <std::forward_iterator_tag, T>
-{
+//Consultar C++ the standard library 9.6
+template <  typename Pointer >
+class ListaIterator : public std::iterator <std::bidirectional_iterator_tag, Pointer, std::ptrdiff_t, Pointer*, Pointer&> {
 protected:
-    typedef typename Lista<T>::PtrNodo Pointer;
     Pointer pointer; 
-
+    
 public:
-    /**
-     * Constructor
-     * @param p puntero a un nodo de la lista
-     */
     ListaIterator (Pointer p) {
         pointer = p;
     }
+
+    void operator= (const ListaIterator<Pointer> value) {
+        this->pointer= value.pointer;
+        //this.pointer=value.pointer; // ERROR!
+    }
     
-    /**
-     * Operador de igualdad
-     * @param value otro ListaIterator
-     * @return bool True si apuntan a la misma posicion
-     */
-    bool operator== (const ListaIterator<T> value) {
+    bool operator== (const ListaIterator<Pointer> value) {
         return (pointer == value.pointer);
     }
     
-    /**
-     * Operador de desigualdad
-     * @param value otro ListaIterator
-     * @return bool True si apuntan a distinta posicion
-     */
-    bool operator!= (const ListaIterator<T> value) {
+    bool operator!= (const ListaIterator<Pointer> value) {
         return !(pointer == value.pointer);
     }
 
-    /**
-     * Operador de referencia
-     * @return T valor del nodo apuntado por este iterador
-     */
-    T operator* () {
-        return pointer->valor;
+    Pointer& operator* () {
+        return *pointer;
     }
     
-    /**
-     * Operador de incremento
-     * @return siguiente iterador
-     */
-    ListaIterator<T> operator++ () {
+    void operator++ () {
         if(pointer!=nullptr)
             pointer=pointer->sig;
-        return pointer;
     }
 
-    /**
-     * Operador de incremento mediante un temporal
-     * @return siguiente iterador
-     */
-    ListaIterator<T> operator++ (int) {
-        ListaIterator<T> tmp(pointer);
-        ++tmp();
-        return tmp;
-    }
 };
 
 
@@ -98,36 +58,35 @@ class Lista {
     struct Nodo {
         T valor;
         Nodo * sig;
+        bool operator == (const Nodo value) {
+            return (sig==value.sig && valor==value.valor);
+        };
+        void operator = (Nodo value) {
+            sig=value.sig;
+            valor=value.valor;
+        };
     };
     
     typedef Nodo * PtrNodo;
     
     PtrNodo ptr;
-    // Agregada clase amiga
-    friend class ListaIterator<T>;
-    
 public:
     Lista():ptr(nullptr) {}
     void push_front(const T &);
     void mostrar() const;
-    /**
-     * Final de lista
-     * @return Iterador a un nullpointer
-     */
-    ListaIterator<T> end(){
-        return (ListaIterator<T>(nullptr));
+    friend std::ostream& operator<< (std::ostream&, const Lista<T>&);
+    
+    ListaIterator<PtrNodo> end(){
+        PtrNodo null = nullptr;
+        return (ListaIterator<PtrNodo>(null));
         }
-    /**
-     * Final de lista
-     * @return Iterador a primer nodo de la lista
-     */
-    ListaIterator<T> begin(){
-        return (ListaIterator<T>(ptr));}
+    ListaIterator<PtrNodo> begin(){
+        return (ListaIterator<PtrNodo>(ptr));}
 };
 
 /**
- * Agregar elemento al inicio de la lista
- * @param x elemento a agregar
+ * Añadir elemento al inicio de la lista
+ * @param x elemento a añadir
  */
 template<typename T>
 void Lista<T>::push_front(const T & x) {
