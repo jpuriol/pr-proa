@@ -49,3 +49,34 @@ void out(It begin, It end)
         cout<<*it<<endl;        //<-Origen de errores
     }
 }
+/*
+Alumno getMin(iterador<Lista> begin, iterador<Lista> end)
+{
+    int min=100000000;
+    Alumno minA;
+    for(auto it=begin;it!=end;++it)
+    {
+        if(*it.GetDNInum()<min)
+        {
+            min=*it.GetDNInum();
+            minA=*it;
+        }
+    }
+    return minA;
+}
+
+Alumno getMin(iterador<Tabla> begin, iterador<Tabla> end)
+{
+    int min=100000000;
+    Alumno minA;
+    for(auto it=begin;it!=end;++it)
+    {
+        if(*it.GetDNInum()<min)
+        {
+            min=it->clave.GetDNInum();
+            minA=*it;
+        }
+    }
+    return minA;
+}
+*/
