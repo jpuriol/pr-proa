@@ -19,6 +19,7 @@
 
 using std::string;
 using std::vector;
+template<typename TClave,typename TDato,template <  typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor,typename Hash>
 class Tabla;
 
 /**
@@ -48,7 +49,7 @@ public:
      * @param t tabla sobre la que definir los iteradores
      * @param inicio true para incializar al inicio, false para inicializar al final
      */
-    TablaIterator<Cell,Contenedor> (vector<vector<Cell>> & t, bool inicio) {
+    TablaIterator<Cell,Contenedor> (vector<contenedor> & t, bool inicio) {
         //Asignación de final de vector
         ovItEnd=t.end();
         if(inicio)
@@ -164,14 +165,50 @@ public:
 };
 
 /**
+ *  Clase DefaultHash
+ *  Operaciones: hash(clave, size)
+ *  Solo soporta Enteros y Stings, para cualquier otro tipo, no usa la clave hash!
+ */
+class defaultHash {
+    public:
+        unsigned hash(int clave,unsigned size) const 
+        {
+            std::cout<<"I";
+            return (clave * 5381 )% size;
+        }
+        unsigned hash(string clave,unsigned size) const
+        {
+            std::cout<<"S";
+            unsigned long h = 5381;
+            for(unsigned i = 0; i < clave.size(); i++)
+                h = ((h << 5) + h) + clave[i];
+        return h % size;
+        };
+        template<typename T>
+        unsigned hash(T clave,unsigned size) const 
+        {
+            std::cout<<"U";
+            (void)clave;
+            (void) size;
+            return 1;
+        }
+};
+
+/**
  * Clase tabla
  * Modificada para agregar iterador
  */
+ template < typename TClave, 
+            typename TDato, 
+            template <  typename Elem,
+                        typename Alloc=std::allocator<Elem>> 
+            class TContenedor = vector,
+            typename Hash = defaultHash>
 class Tabla
 {
 public:
-    typedef string TipoClave;
-    typedef Alumno TipoDato;
+    typedef TClave TipoClave;
+    typedef TDato TipoDato;
     struct Celda {
         TipoClave clave;
         TipoDato dato;
@@ -189,32 +226,84 @@ public:
         }
     };
         
-    Tabla(unsigned); 
-    bool buscar(TipoClave, TipoDato&) ; 
-    void insertar(TipoClave, const TipoDato&); 
-    unsigned hash(TipoClave) const;
-    void mostrar(std::ostream & sal) const;
+    Tabla(unsigned tam) { t.resize(tam); }; 
     
+    unsigned hash(TClave) const;
+   
+    bool buscar(TipoClave, TipoDato&);
+
+    void insertar(TipoClave clave, const TipoDato& valor);
+
     /**
      * Final de Tabla
      * @return Iterador a elemento de la tabla
      */
-    TablaIterator<Celda,vector> end(){
-        return (TablaIterator<Celda,vector>(t,false));
+    TablaIterator<Celda,TContenedor> end(){
+        return (TablaIterator<Celda,TContenedor>(t,false));
         }
+        
     /**
      * Final de Tabla
      * @return Iterador a final de la tabla
      */
-    TablaIterator<Celda,vector> begin(){
-        return (TablaIterator<Celda,vector>(t,true));
+    TablaIterator<Celda,TContenedor> begin(){
+        return (TablaIterator<Celda,TContenedor>(t,true));
         }
-
 private:
-    typedef vector<Celda> ListaDatos; 
+    typedef TContenedor<Celda> ListaDatos; 
     vector<ListaDatos> t;
-    //Agregada clase amiga
-    friend class TablaIterator<Celda,vector>;
+    Hash h;
+    
+    friend class TablaIterator<Celda,TContenedor>;
+    
 };
+
+
+/**
+ * Insert an element
+ * @param clave Key of the element
+ * @param valor Value to be stored
+ */
+template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor, typename Hash>
+void Tabla<TipoClave,TipoDato,TContenedor, Hash>::insertar(TipoClave clave, const TipoDato & valor)
+{
+    unsigned i;
+    i = hash(clave);
+    t[i].push_back(Celda{clave,valor} );
+}
+
+/**
+ * Search for an element
+ * @param clave Key of the element
+ * @param valor Value founded with key "clave"
+ * @return true if element founded, false otherwise
+ */
+template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor, typename Hash>
+bool Tabla<TipoClave,TipoDato, TContenedor,Hash>::buscar(TipoClave clave, TipoDato & valor) 
+{
+    unsigned i;
+    i = hash(clave);
+    for(auto it:t[i])
+    {
+       if(it.clave == clave) 
+       {
+           valor = it.dato;
+           return true;
+       }
+    }
+    return false;
+}
+
+/**
+ * Funcion hash
+ * @param clave para el hash
+ * @return indice de la tabla
+ */
+template <typename TipoClave, typename TipoDato, template <typename Elem,typename Alloc=std::allocator<Elem>> class TContenedor, typename Hash>
+unsigned Tabla<TipoClave,TipoDato,TContenedor,Hash>::hash(TipoClave clave) const
+{
+    return h.hash(clave,t.size());
+}
+
 
 #endif

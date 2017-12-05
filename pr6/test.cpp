@@ -13,6 +13,7 @@
 #include "tabla.h"
 #include <algorithm>
 #include <time.h>
+#include <list>
 using namespace std;
 
 void testLista();
@@ -74,8 +75,8 @@ void testLista()
 void testTabla()
 {
     Alumno al;
-    Tabla tabla(20);
-    vector<Tabla::Celda> vect(10);
+    Tabla<string,Alumno,vector> tabla(20);
+    vector<Tabla<string,Alumno,vector>::Celda> vect(10);
     cout<<"INSERTANDO, SIN ORDEN:"<<endl;
     for(int i=0;i<10;i++)
     {
