@@ -2,6 +2,7 @@
 #include<cassert>
 #include "sarray.h"
 #include "array_traits.h"
+#include <math.h>
 
 /*
  * Classes for representing operations
@@ -40,6 +41,28 @@ class A_Mult {
     // compute sum when value requested 
     T operator[] (size_t idx) const { 
         return op1[idx] * op2[idx]; 
+    } 
+
+    // size is maximum size 
+    size_t size() const { 
+        assert (op1.size()==0 || op2.size()==0 
+                || op1.size()==op2.size()); 
+        return op1.size()!=0 ? op1.size() : op2.size(); 
+    } 
+}; 
+
+template <typename T, typename OP1, typename OP2> 
+class N_Mult { 
+    typename A_Traits<OP1>::ExprRef op1;    // first operand 
+    typename A_Traits<OP2>::ExprRef op2;    // second operand 
+
+  public: 
+    // constructor initializes references to operands 
+    N_Mult(OP1 const& a, OP2 const& b) : op1(a), op2(b) {} 
+
+    // compute sum when value requested 
+    T operator[] (size_t idx) const { 
+        return pow(op2[idx], op1[idx]); 
     } 
 
     // size is maximum size 
@@ -136,6 +159,15 @@ class Array {
 }; 
 
 // Operadores
+// addition of scalar and Array 
+template <typename T, typename R2> 
+Array<T, A_Add<T,A_Scalar<T>,R2> > 
+operator+ (T const& s, Array<T,R2> const& b) 
+{ 
+    return Array<T,A_Add<T,A_Scalar<T>,R2> > 
+         (A_Add<T,A_Scalar<T>,R2>(A_Scalar<T>(s), b.rep())); 
+} 
+
 // addition of two Arrays 
 template <typename T, typename R1, typename R2> 
 Array<T,A_Add<T,R1,R2> > 
@@ -153,3 +185,32 @@ operator* (T const& s, Array<T,R2> const& b)
     return Array<T,A_Mult<T,A_Scalar<T>,R2> > 
          (A_Mult<T,A_Scalar<T>,R2>(A_Scalar<T>(s), b.rep())); 
 } 
+
+// multiplication of Array and Array 
+template <typename T, typename R1, typename R2> 
+Array<T,A_Mult<T,R1,R2> > 
+operator* (Array<T,R1> const& a, Array<T,R2> const& b) 
+{ 
+    return Array<T,A_Mult<T,R1,R2> > 
+           (A_Mult<T,R1,R2>(a.rep(),b.rep())); 
+} 
+
+// potencia de Array y escalar 
+template <typename T, typename R2> 
+Array<T, N_Mult<T,A_Scalar<T>,R2> > 
+operator^ (Array<T,R2> const& b, T const& s) 
+{ 
+    return Array<T,N_Mult<T,A_Scalar<T>,R2> > 
+         (N_Mult<T,A_Scalar<T>,R2>(A_Scalar<T>(s), b.rep())); 
+}
+
+
+
+/*
+TO DO LIST:
+Array + Array -- DONE
+Scalar + Array -- DONE
+Array * Array -- DONE
+Scalar * Array -- DONE
+Array ^ Scalar 
+*/

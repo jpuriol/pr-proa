@@ -12,11 +12,11 @@ int main()
 
     for(unsigned i = 0; i < TAM; i++)
     {
-        x[i] = 2;
-        y[i] = 3;
+        x[i] = i;
+        y[i] = i+5;
     }
     
-    x = 1.2 * x + y;
+    x =  ((1.2+x) + (1.2*y)) * (y^2.0);
     
     for(unsigned i = 0; i < 10; i++)
     {
