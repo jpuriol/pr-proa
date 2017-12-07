@@ -204,13 +204,3 @@ operator^ (Array<T,R2> const& b, T const& s)
          (N_Mult<T,A_Scalar<T>,R2>(A_Scalar<T>(s), b.rep())); 
 }
 
-
-
-/*
-TO DO LIST:
-Array + Array -- DONE
-Scalar + Array -- DONE
-Array * Array -- DONE
-Scalar * Array -- DONE
-Array ^ Scalar 
-*/
