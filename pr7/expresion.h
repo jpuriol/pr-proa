@@ -27,6 +27,12 @@ class A_Add {
                 || op1.size()==op2.size()); 
         return op1.size()!=0 ? op1.size() : op2.size(); 
     } 
+    
+    std::string type()
+    {
+        return "A_Add<"+op1.type()+", "+op2.type()+">";
+    }
+    
 }; 
 
 template <typename T, typename OP1, typename OP2> 
@@ -49,6 +55,11 @@ class A_Mult {
                 || op1.size()==op2.size()); 
         return op1.size()!=0 ? op1.size() : op2.size(); 
     } 
+    
+    std::string type()
+    {
+        return "A_Mult<"+op1.type()+", "+op2.type()+">";
+    }
 }; 
 
 template <typename T, typename OP1, typename OP2> 
@@ -71,6 +82,11 @@ class N_Mult {
                 || op1.size()==op2.size()); 
         return op1.size()!=0 ? op1.size() : op2.size(); 
     } 
+    
+    std::string type()
+    {
+        return "A_Pow<"+op1.type()+", "+op2.type()+">";
+    }
 }; 
 
 template <typename T> 
@@ -90,6 +106,11 @@ class A_Scalar {
     // scalars have zero as size 
     size_t size() const { 
         return 0; 
+    }
+    
+    std::string type()
+    {
+        return "A_Scalar";
     }
 }; 
 
@@ -156,6 +177,22 @@ class Array {
     friend Array<T2, A_Mult<T2,A_Scalar<T2>,R2> > 
     operator* (T2 const& s, Array<T2,R2> const& b);
 
+    template <typename T2, typename R2> 
+    friend Array<T2, A_Add<T2,A_Scalar<T2>,R2> > 
+    operator+ (T2 const& s, Array<T2,R2> const& b);
+    
+    template <typename T2, typename R1, typename R2> 
+    friend Array<T2,A_Mult<T2,R1,R2> > 
+    operator* (Array<T2,R1> const& a, Array<T2,R2> const& b);
+
+    template <typename T2, typename R2> 
+    friend Array<T2, N_Mult<T2,A_Scalar<T2>,R2> > 
+    operator^ (Array<T2,R2> const& b, T2 const& s);
+    
+    std::string type()
+    {
+        return "SArrayExpresion"; //< MODIFICAR ESTE PARA EL PASO 5
+    }
 }; 
 
 // Operadores

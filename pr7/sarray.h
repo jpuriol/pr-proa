@@ -60,6 +60,11 @@ public:
             storage[idx] = orig.storage[idx]; 
         } 
     } 
+    
+    std::string type()
+    {
+        return "SArray";
+    }
 };
 
 #endif
