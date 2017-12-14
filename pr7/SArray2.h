@@ -1,11 +1,17 @@
-/*
- * Clase Simple Array (SArray)
- * Obtenida de transparencias de clase
- * 
- */
+/**
+* @file SArray2.h
+*
+* Practicas de PROA
+*
+* @author Ignacio Gomis Lli
+* @author Juan Pablo Uriol Balbin
+* @date 14/12/2017
+* @version 1.0
+*/
 
 #ifndef _SARRAY2_H
 #define _SARRAY2_H
+#include<cassert>
 
 template<typename T> 
 class SArray2 {   // Simple Array
@@ -52,20 +58,16 @@ public:
      */
     SArray2<T> operator+ (SArray2<T> const& b) 
     {
-        if(storage_size==b.size())
+        assert (storage_size==0 || b.size()==0 
+                || storage_size==b.size()); 
+                
+        SArray2 result (storage_size);
+        for(unsigned i=0;i<storage_size;i++)
         {
-            SArray2 result (storage_size);
-            for(unsigned i=0;i<storage_size;i++)
-            {
-                result[i]=storage[i]+b[i];
-            }
-            return result;
+            result[i]=storage[i]+b[i];
         }
-        else
-        {
-            //throw runtime_error("Sizes of Arrays Must Agree");
-            return SArray2(storage_size);   //COMPROBAR SI ES NECESARIO CUANDO FUNCIONE EL RUNTIME ERROR
-        }
+        return result;
+        
     }
     
     /**
@@ -74,20 +76,15 @@ public:
      */
     SArray2<T> operator* (SArray2<T> const& b) 
     {
-        if(storage_size==b.size())
+        assert (storage_size==0 || b.size()==0 
+                || storage_size==b.size()); 
+                
+        SArray2 result (storage_size);
+        for(unsigned i=0;i<storage_size;i++)
         {
-            SArray2 result (storage_size);
-            for(unsigned i=0;i<storage_size;i++)
-            {
-                result[i]=storage[i]*b[i];
-            }
-            return result;
+            result[i]=storage[i]*b[i];
         }
-        else
-        {
-            //throw runtime_error("Sizes of Arrays Must Agree");
-            return SArray2(storage_size); //COMPROBAR SI ES NECESARIO CUANDO FUNCIONE EL RUNTIME ERROR
-        }
+        return result;
     }
     
     /**

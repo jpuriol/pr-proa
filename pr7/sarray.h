@@ -45,7 +45,11 @@ public:
     T& operator[] (size_t idx) { 
         return storage[idx]; 
     }
-        
+    
+    /**
+     * Fuction for returning type
+     * @return type as string
+     */
     std::string type() const
     {
         return "SArray";

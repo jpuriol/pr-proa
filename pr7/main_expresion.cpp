@@ -1,3 +1,13 @@
+/**
+* @file main_expresion.cpp
+*
+* Practicas de PROA
+*
+* @author Ignacio Gomis Lli
+* @author Juan Pablo Uriol Balbin
+* @date 14/12/2017
+* @version 1.0
+*/
 #include<iostream>
 #include "expresion.h"
 #include "SArray2.h"
@@ -63,6 +73,7 @@ int main()
     }
     cout<<endl;
     
+    //Parte 5
     cout<< (1.2+x).type()<<endl;
     cout<< (1.2*x).type()<<endl;
     cout<< (x^1.2).type()<<endl;

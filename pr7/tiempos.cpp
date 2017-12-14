@@ -1,3 +1,13 @@
+/**
+* @file tiempos.cpp
+*
+* Practicas de PROA
+*
+* @author Ignacio Gomis Lli
+* @author Juan Pablo Uriol Balbin
+* @date 14/12/2017
+* @version 1.0
+*/
 #include<iostream>
 #include "expresion.h"
 #include "SArray2.h"

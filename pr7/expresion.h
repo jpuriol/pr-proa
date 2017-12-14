@@ -1,3 +1,13 @@
+/**
+* @file expresion.h
+*
+* Practicas de PROA
+*
+* @author Ignacio Gomis Lli
+* @author Juan Pablo Uriol Balbin
+* @date 14/12/2017
+* @version 1.0
+*/
 #include<cassert>
 #include "sarray.h"
 #include "array_traits.h"
@@ -27,6 +37,10 @@ class A_Add {
         return op1.size()!=0 ? op1.size() : op2.size(); 
     } 
     
+    /**
+     * Fuction for returning type
+     * @return type as string
+     */
      std::string type() const
     {
         return "A_Add<"+op1.type()+", "+op2.type()+">";
@@ -55,6 +69,10 @@ class A_Mult {
         return op1.size()!=0 ? op1.size() : op2.size(); 
     } 
     
+    /**
+     * Fuction for returning type
+     * @return type as string
+     */
     std::string type() const
     {     
         return ("A_Mult<"+ op1.type() +", "+ op2.type() +">");
@@ -82,7 +100,11 @@ class N_Mult {
         return op1.size()!=0 ? op1.size() : op2.size(); 
     } 
     
-       std::string type() const
+    /**
+     * Fuction for returning type
+     * @return type as string
+     */
+    std::string type() const
     {
         return "A_Pow<"+op1.type()+", "+op2.type()+">";
     }
@@ -107,7 +129,11 @@ class A_Scalar {
         return 0; 
     }
     
-       std::string type() const
+    /**
+     * Fuction for returning type
+     * @return type as string
+     */
+    std::string type() const
     {
         return "A_Scalar";
     }
@@ -188,6 +214,10 @@ class Array {
     friend Array<T2, N_Mult<T2,A_Scalar<T2>,R2> > 
     operator^ (Array<T2,R2> const& b, T2 const& s);
     
+    /**
+     * Fuction for returning type
+     * @return type as string
+     */
     std::string type()
     {
         return expr_rep.type() ;
