@@ -1,3 +1,5 @@
+
+
 #include<iostream>
 #include "expresion.h"
 #include "SArray2.h"
@@ -63,5 +65,4 @@ int main()
         cout << alfa[i] << " ";
     }
 
-    (x + y).type();
 }
