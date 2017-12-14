@@ -4,6 +4,7 @@
 #include "expresion.h"
 #include "SArray2.h"
 #include "Eigen/Dense"
+
 using namespace std;
 using Eigen::ArrayXd;
 
