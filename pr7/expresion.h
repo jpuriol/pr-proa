@@ -1,4 +1,3 @@
-
 #include<cassert>
 #include "sarray.h"
 #include "array_traits.h"
@@ -139,7 +138,7 @@ class Array {
         return expr_rep[idx]; 
     } 
     
-        // assignment operator for same type 
+    // assignment operator for same type 
     Array& operator= (Array const& b) { 
         assert(size() == b.size()); 
         for (size_t idx = 0; idx < b.size(); ++idx) { 
@@ -161,7 +160,7 @@ class Array {
         return expr_rep.size(); 
     } 
     
-     // return what the array currently represents 
+    // return what the array currently represents 
     Rep const& rep() const { 
         return expr_rep; 
     } 
@@ -189,9 +188,9 @@ class Array {
     friend Array<T2, N_Mult<T2,A_Scalar<T2>,R2> > 
     operator^ (Array<T2,R2> const& b, T2 const& s);
     
-    std::string type()
+    void type()
     {
-        return "SArrayExpresion"; //< MODIFICAR ESTE PARA EL PASO 5
+        std::cout << expr_rep.type() << std::endl;
     }
 }; 
 
