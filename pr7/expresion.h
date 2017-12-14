@@ -27,7 +27,7 @@ class A_Add {
         return op1.size()!=0 ? op1.size() : op2.size(); 
     } 
     
-    std::string type()
+     std::string type() const
     {
         return "A_Add<"+op1.type()+", "+op2.type()+">";
     }
@@ -36,8 +36,8 @@ class A_Add {
 
 template <typename T, typename OP1, typename OP2> 
 class A_Mult { 
-    typename A_Traits<OP1>::ExprRef op1;    // first operand 
-    typename A_Traits<OP2>::ExprRef op2;    // second operand 
+      typename A_Traits<OP1>::ExprRef op1;    // first operand 
+      typename A_Traits<OP2>::ExprRef op2;    // second operand 
 
   public: 
     // constructor initializes references to operands 
@@ -55,16 +55,16 @@ class A_Mult {
         return op1.size()!=0 ? op1.size() : op2.size(); 
     } 
     
-    std::string type()
-    {
-        return "A_Mult<"+op1.type()+", "+op2.type()+">";
+    std::string type() const
+    {     
+        return ("A_Mult<"+ op1.type() +", "+ op2.type() +">");
     }
 }; 
 
 template <typename T, typename OP1, typename OP2> 
 class N_Mult { 
-    typename A_Traits<OP1>::ExprRef op1;    // first operand 
-    typename A_Traits<OP2>::ExprRef op2;    // second operand 
+      typename A_Traits<OP1>::ExprRef op1;    // first operand 
+      typename A_Traits<OP2>::ExprRef op2;    // second operand 
 
   public: 
     // constructor initializes references to operands 
@@ -82,7 +82,7 @@ class N_Mult {
         return op1.size()!=0 ? op1.size() : op2.size(); 
     } 
     
-    std::string type()
+       std::string type() const
     {
         return "A_Pow<"+op1.type()+", "+op2.type()+">";
     }
@@ -107,7 +107,7 @@ class A_Scalar {
         return 0; 
     }
     
-    std::string type()
+       std::string type() const
     {
         return "A_Scalar";
     }
@@ -138,7 +138,7 @@ class Array {
         return expr_rep[idx]; 
     } 
     
-    // assignment operator for same type 
+        // assignment operator for same type 
     Array& operator= (Array const& b) { 
         assert(size() == b.size()); 
         for (size_t idx = 0; idx < b.size(); ++idx) { 
@@ -160,7 +160,7 @@ class Array {
         return expr_rep.size(); 
     } 
     
-    // return what the array currently represents 
+     // return what the array currently represents 
     Rep const& rep() const { 
         return expr_rep; 
     } 
@@ -188,9 +188,9 @@ class Array {
     friend Array<T2, N_Mult<T2,A_Scalar<T2>,R2> > 
     operator^ (Array<T2,R2> const& b, T2 const& s);
     
-    void type()
+    std::string type()
     {
-        std::cout << expr_rep.type() << std::endl;
+        return expr_rep.type() ;
     }
 }; 
 
