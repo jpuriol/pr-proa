@@ -45,6 +45,12 @@ public:
     T& operator[] (size_t idx) { 
         return storage[idx]; 
     }
+        
+    std::string type() const
+    {
+        return "SArray";
+    }
+    
     protected: 
     // init values with default constructor 
     void init() { 
@@ -60,11 +66,7 @@ public:
             storage[idx] = orig.storage[idx]; 
         } 
     } 
-    
-    std::string type()
-    {
-        return "SArray";
-    }
+
 };
 
 #endif

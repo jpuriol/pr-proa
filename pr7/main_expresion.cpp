@@ -63,5 +63,14 @@ int main()
     {
         cout << alfa[i] << " ";
     }
-
+    cout<<endl;
+    
+    cout<< (1.2+x).type()<<endl;
+    cout<< (1.2*x).type()<<endl;
+    cout<< (x^1.2).type()<<endl;
+    cout<< (x+x).type()<<endl;
+    cout<< (y*y).type()<<endl;
+    cout<< (y*(y*y)).type()<<endl;
+    cout<< (1.2 * x + y).type()<<endl;
+    cout<< ((1.2 + x * y) + ((2.0 * y)^2.0)).type() << endl;
 }
