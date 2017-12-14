@@ -47,7 +47,7 @@ int main()
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &fin_time2);
     cout << "\tCLOCK_REALTIME:" << (double)fin_time1.tv_sec - (double) ini_time1.tv_sec + fin_time1.tv_nsec * 1e-9 - ini_time1.tv_nsec * 1e-9 << endl;
     cout << "\tCLOCK_PROCESS_CPUTIME_ID:" << (double)fin_time2.tv_sec - (double) ini_time2.tv_sec + fin_time2.tv_nsec * 1e-9 - ini_time2.tv_nsec * 1e-9 << endl;
-    cout << "\tOperating sistem time:" << ((double)fin_time1.tv_sec - (double) ini_time1.tv_sec + fin_time1.tv_nsec * 1e-9 - ini_time1.tv_nsec * 1e-9 )-( (double)fin_time2.tv_sec - (double) ini_time2.tv_sec + fin_time2.tv_nsec * 1e-9 - ini_time2.tv_nsec * 1e-9) << endl;
+    cout << "\tOperating system time:" << ((double)fin_time1.tv_sec - (double) ini_time1.tv_sec + fin_time1.tv_nsec * 1e-9 - ini_time1.tv_nsec * 1e-9 )-( (double)fin_time2.tv_sec - (double) ini_time2.tv_sec + fin_time2.tv_nsec * 1e-9 - ini_time2.tv_nsec * 1e-9) << endl;
     
     cout << "Classical Way:" << endl;
     clock_gettime(CLOCK_REALTIME, &ini_time1);
@@ -58,7 +58,7 @@ int main()
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &fin_time2);
     cout << "\tCLOCK_REALTIME: " << (double)fin_time1.tv_sec - (double) ini_time1.tv_sec + fin_time1.tv_nsec * 1e-9 - ini_time1.tv_nsec * 1e-9 << endl;
     cout << "\tCLOCK_PROCESS_CPUTIME_ID: " << (double)fin_time2.tv_sec - (double) ini_time2.tv_sec + fin_time2.tv_nsec * 1e-9 - ini_time2.tv_nsec * 1e-9 << endl;
-    cout << "\tOperating sistem time: " << ((double)fin_time1.tv_sec - (double) ini_time1.tv_sec + fin_time1.tv_nsec * 1e-9 - ini_time1.tv_nsec * 1e-9 )-( (double)fin_time2.tv_sec - (double) ini_time2.tv_sec + fin_time2.tv_nsec * 1e-9 - ini_time2.tv_nsec * 1e-9) << endl;
+    cout << "\tOperating system time: " << ((double)fin_time1.tv_sec - (double) ini_time1.tv_sec + fin_time1.tv_nsec * 1e-9 - ini_time1.tv_nsec * 1e-9 )-( (double)fin_time2.tv_sec - (double) ini_time2.tv_sec + fin_time2.tv_nsec * 1e-9 - ini_time2.tv_nsec * 1e-9) << endl;
     
     cout << "Eigen:" << endl;
     clock_gettime(CLOCK_REALTIME, &ini_time1);
@@ -69,7 +69,7 @@ int main()
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &fin_time2);
     cout << "\tCLOCK_REALTIME:" << (double)fin_time1.tv_sec - (double) ini_time1.tv_sec + fin_time1.tv_nsec * 1e-9 - ini_time1.tv_nsec * 1e-9 << endl;
     cout << "\tCLOCK_PROCESS_CPUTIME_ID:" << (double)fin_time2.tv_sec - (double) ini_time2.tv_sec + fin_time2.tv_nsec * 1e-9 - ini_time2.tv_nsec * 1e-9 << endl;
-    cout << "\tOperating sistem time:" << ((double)fin_time1.tv_sec - (double) ini_time1.tv_sec + fin_time1.tv_nsec * 1e-9 - ini_time1.tv_nsec * 1e-9 )-( (double)fin_time2.tv_sec - (double) ini_time2.tv_sec + fin_time2.tv_nsec * 1e-9 - ini_time2.tv_nsec * 1e-9) << endl;
+    cout << "\tOperating system time:" << ((double)fin_time1.tv_sec - (double) ini_time1.tv_sec + fin_time1.tv_nsec * 1e-9 - ini_time1.tv_nsec * 1e-9 )-( (double)fin_time2.tv_sec - (double) ini_time2.tv_sec + fin_time2.tv_nsec * 1e-9 - ini_time2.tv_nsec * 1e-9) << endl;
     
     return 0;
 }
