@@ -15,7 +15,11 @@ int main()
 {
     srand(time(NULL));
     Graph<float> g(6, false);
-    /*g.set(0,3,5);
+    
+    /*
+    PARTE 1
+    TEST GRAFO 
+    g.set(0,3,5);
     float valor = g.at(0,3);
     cout<<valor<<endl;
     for(int i=0;i<5;i++)
@@ -26,7 +30,10 @@ int main()
             else
             g.set(i,j,-2*i+j);
         }
-    cout<< g.toString();*/
+    cout<< g.toString();
+    */
+    
+    //PARTE 2
     g.randomFill(0.5,6);
     cout<< g.toString()<<endl;
     print(Floyd(g));
@@ -78,8 +85,6 @@ vector<vector<T>> FloydInc (Graph<T> grafo)
             else  
                 matrix[i][j]=grafo.at(i,j);
         }
-
-        
     }
        
     for(unsigned k=0;k<size;k++)
