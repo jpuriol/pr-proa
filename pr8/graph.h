@@ -87,34 +87,6 @@ public:
     }
     
     /**
-     * Funcion para rellenar el grafo aleatoriamente con [min,max)
-     * @param min Valor minimo
-     * @param max Valor maximo (no alcanzable)
-     * @param prob Probabilidad de no haber arco
-     */
-    void randomFill(T min,T max,float prob)
-    {
-        if(!bidirection)
-        {
-            for(unsigned i=0;i<N;i++)
-                for(unsigned j=0;j<N;j++)
-                    if(i!=j && (float)(rand()%100)/100>prob)
-                        set(i,j,((float)(rand()%100)/100*(max-min)+min));
-                    else
-                        set(i,j,0);
-        }
-        else
-        {
-            for(unsigned i=0;i<N;i++)
-                for(unsigned j=i;j<N;j++)
-                    if(i!=j && (float)(rand()%100)/100>prob)
-                        set(i,j,((float)(rand()%100)/100*(max-min)+min));
-                    else
-                        set(i,j,0);
-        }
-    }
-    
-    /**
      * Devuelve el numero de nodos del grafo
      * @return numero de nodos
      */
@@ -124,32 +96,41 @@ public:
     }
 };
 
+
+
+
     /**
-     * Funcion para rellenar el grafo aleatoriamente con [min,max)
+     * Funcion para rellenar el grafo aleatoriamente con [min,max) para floats
      * @param min Valor minimo
      * @param max Valor maximo (no alcanzable)
      */
-    template<typename T,unsigned N, typename std::enable_if<std::is_floating_point<T>::value>::type>
-    void randomFill(Grafo<T,N> & grafo, T min,T max)
+    template <typename T, typename G>
+    typename std::enable_if<std::is_floating_point<T>::value>::type randomFill(T min,T max, G & grafo)
     {
-            for(unsigned i=0;i<N;i++)
-                for(unsigned j=0;j<N;j++)
-                    if(i!=j)
-                        grafo.set(i,j,((float)((rand()/RAND_MAX)*(max-min)+min));
-                    else
-                        grafo.set(i,i,0);
-        
+        cout<<rand()/RAND_MAX<<endl;
+        cout<<(max-min)+min<<endl;
+        for(unsigned i=0;i<grafo.size();i++)
+            for(unsigned j=0;j<grafo.size();j++)
+                if(i!=j)
+                    grafo.set(i,j,((((float)rand()/(float)RAND_MAX)*(max-min)+min)));
+                else
+                    grafo.set(i,i,0);
     }
-    template<typename T,unsigned N, typename std::enable_if<std::is_floating_point<T>::value>::type>
-    void randomFill(Grafo<T,N> & grafo, T min,T max)
+    
+    /**
+     * Funcion para rellenar el grafo aleatoriamente con [min,max) para ints
+     * @param min Valor minimo
+     * @param max Valor maximo (no alcanzable)
+     */
+     template <typename T, typename G>
+    typename std::enable_if<std::is_integral <T>::value>::type randomFill(T min,T max, G & grafo)
     {
-            for(unsigned i=0;i<N;i++)
-                for(unsigned j=0;j<N;j++)
-                    if(i!=j)
-                        grafo.set(i,j,(rand()%(max-min)+min));
-                    else
-                        grafo.set(i,i,0);
-        
+        for(unsigned i=0;i<grafo.size();i++)
+            for(unsigned j=0;j<grafo.size();j++)
+                if(i!=j)
+                    grafo.set(i,j,(rand()%(max-min)+min));
+                else
+                    grafo.set(i,i,0);
     }
 
 

@@ -9,14 +9,12 @@ const unsigned NODES = 6;
 template <typename T>
 vector<vector<T>> Floyd (Graph<T, NODES>);
 template <typename T>
-vector<vector<T>> FloydInc (Graph<T, NODES>);
-template <typename T>
 void print(vector<vector<T>>);
 void print(vector<vector<string>>);
 template <typename T>
 void FloydWay (Graph<T, NODES>, vector<vector<T>> &, vector<vector<string>> &);
 template <typename T>
-void print(unsigned,const unsigned,vector<vector<T>> &, const vector<vector<string>> &);
+void print(unsigned,unsigned, const vector<vector<T>> &, const vector<vector<string>> &);
 
 int main()
 {
@@ -24,9 +22,9 @@ int main()
     Graph<float, NODES> g(false);
     vector<vector<string>> camino(NODES);
     vector<vector<float>> resultado;
-    /*
-    PARTE 1
-    TEST GRAFO 
+    
+    //PARTE 1
+    //TEST GRAFO 
     g.set(0,3,5);
     float valor = g.at(0,3);
     cout<<valor<<endl;
@@ -38,30 +36,19 @@ int main()
             else
             g.set(i,j,-2*i+j);
         }
-    cout<< g.toString();
-    */
+    cout<< g.toString()<<endl;
+    g.limpiar();
+    
     
     //PARTE 2
-    randomFill<float,6> (g,1,6);
+    randomFill(0.5,6.0,g);
     cout<< g.toString()<<endl;
     print(Floyd(g));
     //PARTE 3    
     FloydWay(g,resultado, camino );
     
-    cout<< camino[0][0]<<endl;
-    cout<< camino[0][1]<<endl;
-    cout<< camino[0][2]<<endl;
-    cout<< camino[0][3]<<endl;
-    cout<< camino[0][4]<<endl;
-    cout<< camino[0][5]<<endl;
-
-    /*
-    //PARTE 2 Con el algoritmo de Floyd para grafos no completos
-    Graph<int> h(6, false);
-    h.randomFill(1,5,0.5);
-    cout<< h.toString()<<endl;
-    print(FloydInc(h));
-    */
+    for(int i=0;i<6;i++)
+        print(0,i,resultado,camino);
 }
 
 
@@ -84,35 +71,6 @@ vector<vector<T>> Floyd (Graph<T, NODES> grafo)
                 
     return matrix;
 }
-
-/*
-template <typename T>
-vector<vector<T>> FloydInc (Graph<T> grafo)
-{
-    T w;
-    unsigned size=grafo.size();
-    vector<vector<T>> matrix(size);
-    for(unsigned i=0;i<size;i++)
-    {
-        matrix[i].resize(size);
-        for(unsigned j=0;j<size;j++)
-        {
-            w=grafo.at(i,j);
-            if(w==0&& i!=j)
-                matrix[i][j]=999999999;
-            else  
-                matrix[i][j]=grafo.at(i,j);
-        }
-    }
-       
-    for(unsigned k=0;k<size;k++)
-        for(unsigned i=0;i<size;i++)
-            for(unsigned j=0;j<size;j++)
-                matrix[i][j] = min(matrix[i][j],matrix[i][k]+matrix[k][j]);
-                
-    return matrix;
-}
-*/
 
 template <typename T>
 void print(vector<vector<T>> m)
@@ -180,4 +138,11 @@ void FloydWay (Graph<T, NODES> grafo,vector<vector<T>> & matrix,vector<vector<st
             }
         }
     }
+}
+
+template <typename T>
+void print(unsigned i , unsigned j ,const vector<vector<T>> & res, const vector<vector<string>> & cam)
+{
+    cout<<"Precio: "<<res[i][j]<<endl;
+    cout<<"  Camino: "<<cam[i][j]<<endl<<endl;
 }
