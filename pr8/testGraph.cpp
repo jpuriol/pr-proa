@@ -4,21 +4,24 @@
 #include <time.h>
 using namespace std;
 
+const unsigned NODES = 6;
+
 template <typename T>
-vector<vector<T>> Floyd (Graph<T>);
+vector<vector<T>> Floyd (Graph<T, NODES>);
 template <typename T>
-vector<vector<T>> FloydInc (Graph<T>);
+vector<vector<T>> FloydInc (Graph<T, NODES>);
 template <typename T>
 void print(vector<vector<T>>);
 void print(vector<vector<string>>);
 template <typename T>
-vector<vector<string>> FloydWay (Graph<T>);
+void FloydWay (Graph<T, NODES>, vector<vector<T>> &, vector<vector<string>> &);
 
 int main()
 {
     srand(time(NULL));
-    Graph<float> g(6, false);
-    vector<vector<string>> camino;
+    Graph<float, NODES> g(false);
+    vector<vector<string>> camino(NODES);
+    vector<vector<float>> resultado;
     /*
     PARTE 1
     TEST GRAFO 
@@ -40,15 +43,16 @@ int main()
     g.randomFill(1,6);
     cout<< g.toString()<<endl;
     print(Floyd(g));
-    //PARTE 3
-    camino = (FloydWay(g));
+    //PARTE 3    
+    FloydWay(g,resultado, camino );
+    
     cout<< camino[0][0]<<endl;
     cout<< camino[0][1]<<endl;
     cout<< camino[0][2]<<endl;
     cout<< camino[0][3]<<endl;
     cout<< camino[0][4]<<endl;
     cout<< camino[0][5]<<endl;
-    
+
     /*
     //PARTE 2 Con el algoritmo de Floyd para grafos no completos
     Graph<int> h(6, false);
@@ -60,7 +64,7 @@ int main()
 
 
 template <typename T>
-vector<vector<T>> Floyd (Graph<T> grafo)
+vector<vector<T>> Floyd (Graph<T, NODES> grafo)
 {
     unsigned size=grafo.size();
     vector<vector<T>> matrix(size);
@@ -136,11 +140,13 @@ void print(vector<vector<string>> m)
     }
     
 template <typename T>
-vector<vector<string>> FloydWay (Graph<T> grafo)
+void FloydWay (Graph<T, NODES> grafo,vector<vector<T>> & matrix,vector<vector<string>> & caminos)
 {
     unsigned size=grafo.size();
-    vector<vector<T>> matrix(size);
-    vector<vector<string>> caminos(size);
+    matrix.clear();
+    caminos.clear();
+    matrix.resize(size);
+    caminos.resize(size);
     for(unsigned i=0;i<size;i++)
     {
         matrix[i].resize(size);
@@ -172,5 +178,4 @@ vector<vector<string>> FloydWay (Graph<T> grafo)
             }
         }
     }
-    return caminos;
 }
