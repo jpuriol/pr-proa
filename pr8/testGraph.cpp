@@ -15,6 +15,8 @@ void print(vector<vector<T>>);
 void print(vector<vector<string>>);
 template <typename T>
 void FloydWay (Graph<T, NODES>, vector<vector<T>> &, vector<vector<string>> &);
+template <typename T>
+void print(unsigned,const unsigned,vector<vector<T>> &, const vector<vector<string>> &);
 
 int main()
 {
@@ -40,7 +42,7 @@ int main()
     */
     
     //PARTE 2
-    g.randomFill(1,6);
+    randomFill<float,6> (g,1,6);
     cout<< g.toString()<<endl;
     print(Floyd(g));
     //PARTE 3    
